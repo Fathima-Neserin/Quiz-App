@@ -1,25 +1,34 @@
 import { useEffect } from "react";
 import Questions from "./Questions";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { moveNextQuestion, movePrevQuestion } from "../hooks/fetchQuestion";
 
 const QuizComponent = () => {
-  const state = useSelector((state) => state);
+  const { qstns, trace } = useSelector((state) => state.questions);
 
-  useEffect(() => {
-    // if (qstns?.length) {
-    //   console.log("Questions loaded:", qstns);
-    // } else {
-    //   console.log("No questions yet");
-    // }
-    console.log(state);
-  });
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   // if (qstns?.length) {
+  //   //   console.log("Questions loaded:", qstns);
+  //   // } else {
+  //   //   console.log("No questions yet");
+  //   // }
+  //   // console.log(state);
+  // });
 
   const onNextHandler = () => {
-    console.log("Next button clicked");
+    if (trace < qstns.length) {
+      console.log("Next button clicked");
+      dispatch(moveNextQuestion());
+    }
   };
 
   const onPrevHandler = () => {
-    console.log("Prev button clicked");
+    if (trace > 0) {
+      console.log("Prev button clicked");
+      dispatch(movePrevQuestion());
+    }
   };
   return (
     <div className="container">
